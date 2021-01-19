@@ -1,24 +1,20 @@
 
-/*
- Structure de données pour notre configuration de base
- */
+
  struct N_config
  {
-   int tailleVecteur; //variable pour la taille du vecteur
-   int nbNeuronneLigne; // nombre de neuron map sur ligne
-   int nbNeuronneColone; // npmbre de neuron sur colone
-   int nbNeuronne; //total neuron (n_l_out * n_c_out)
-   int nbIteration; // Nombre d'iterations qu'on calcule avec la methode donnée
-   double minAlpha;//starting value
-   int train; //training layer operation num
-   int ftrain; //first layer operation num
+   int tailleVecteur; 
+   int nbNeuronneLigne; 
+   int nbNeuronneColone; 
+   int nbNeuronne; 
+   int nbIteration; 
+   double minAlpha;
+   int train; 
+   int ftrain; 
  }N_conf;
 
 
 
-/*
- Structure d'un node (neuron)
- */
+
  struct neurone
  {
     double *w;
@@ -29,9 +25,9 @@ typedef struct neurone Neurone;
 
 
 struct best {
-	double distance_eql; // euclidian distance
-	int r;
-	int c;
+	double distance_eql; 
+	int r; // ligne 
+	int c; //colone
 };
 
 typedef struct best bmu;

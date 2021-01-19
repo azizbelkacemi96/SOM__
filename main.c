@@ -13,23 +13,19 @@ int Bmu_size=1;
 
 
 
-/**
-On met a jours
-le nouveau Best-Matching Unit
-**/
+
 void update(bmu* b_mu)
 {
     int nr=reseau.voisinage;
     int i,j,x1,x2,y1,y2;
 
-    for(;nr>=0;nr--)
-    {
+ 
         if(b_mu->r-nr<0)
-            x1=0;
+            x1=0; 
         else
             x1=b_mu->r-nr;
         if(b_mu->c-nr<0)
-            y1=0;
+            y1=0; 
         else
             y1=b_mu->c-nr;
 
@@ -46,21 +42,19 @@ void update(bmu* b_mu)
             for(j=y1;j<=y2;j++)
             {
 
-                int k;
+                int k; // nombre de var du vec d'entré
 
-                for(k=0;k<N_conf.tailleVecteur;k++)
+                for(k=0;k<N_conf.tailleVecteur;k++) // mettre a jour le vec du bmu
                     {
 
                         reseau.map[i][j].w[k]+=reseau.alpha*(reseau.vecteur_courant[k]-reseau.map[i][j].w[k]);
                     }
             }
-    }
+   
 }
 
 
-/**
-création de notre carte
-**/
+
 void create_neuron_map()
 {
     int i,j;
@@ -82,9 +76,7 @@ void create_neuron_map()
 	}
 }
 
-/*
-Fonction pour afficher la map avant et apres le traitement
-*/
+
 void print_la_map()
 {
     int i,j;
@@ -101,24 +93,20 @@ void print_la_map()
 
 
 
-/**
-Coeur de l'algorithme
-la boite noire
-**/
 
 void training()
 {
     int i,j,p,u,it;
-    double min_d,dist;
+    double min_d,dist; // distance min dis : distance entre un neuronne et le vecteur
 
-    Bmu=malloc(sizeof(bmu));
+    Bmu=malloc(sizeof(bmu)); // psk plusieur 
 
-    for(p=0;p<N_conf.train;p++)
+    for(p=0;p<N_conf.train;p++) // nombre de phase  
     {
         int cur_n_it;
         if(!p)
         {
-            cur_n_it=N_conf.ftrain;
+            cur_n_it=N_conf.ftrain;  // first
         }
         else
         {
@@ -131,9 +119,9 @@ void training()
         {
             calc_alpha(it,cur_n_it);
 
-            if(it%(N_conf.ftrain/2)==0&&it!=0&&p==0)
+            if(it%(N_conf.ftrain/6)==0&&it!=0&&p==0)
             {
-                reseau.voisinage-=1;
+                reseau.voisinage-=1; // ?????
             }
 
 
@@ -142,8 +130,8 @@ void training()
             for(u=0;u<150;u++)
             {
 
-                reseau.vecteur_courant=vecteur_tab[index_array[u]].argument;
-                min_d=1000.;
+                reseau.vecteur_courant=vecteur_tab[index_array[u]].argument; // on selection un vecteur
+                min_d=200;
                 for(i=0;i<N_conf.nbNeuronneLigne;i++)
                 {
                     for(j=0;j<N_conf.nbNeuronneColone;j++)
@@ -152,17 +140,17 @@ void training()
                         reseau.map[i][j].distance_eql=dist;
                         if(dist<min_d)
                         {
-                            min_d=dist;
+                            min_d=dist;    // c'est la ou on calc la dis euc et le best 
                             if(Bmu_size>1)
                             {
                                 Bmu_size=1;
-                                Bmu=realloc(Bmu,Bmu_size*sizeof(bmu));
+                                Bmu=realloc(Bmu,Bmu_size*sizeof(bmu)); // maj de la BMU si on trouve mieux
                             }
                             Bmu[0].distance_eql=dist;
-                            Bmu[0].r=i;
-                            Bmu[0].c=j;
+                            Bmu[0].r=i; // ligne 
+                            Bmu[0].c=j; // colone
                         }
-                        else if(dist==min_d)
+                        else if(dist==min_d) // on cas ou on trouve plusieur bmu equivalent 
                         {
 
                             Bmu_size++;
@@ -178,11 +166,13 @@ void training()
                 if(Bmu_size>1)
                 {
                     int t=rand()%(Bmu_size);
-                    Bmu[0]=Bmu[t];
+                strcpy(reseau.map[Bmu[t].r][Bmu[t].c].etiquette, vecteur_tab[index_array[u]].nom);
+                update(Bmu);
                 }
-
+                
                 strcpy(reseau.map[Bmu[0].r][Bmu[0].c].etiquette, vecteur_tab[index_array[u]].nom);
                 update(Bmu);
+                
             }
         }
     }

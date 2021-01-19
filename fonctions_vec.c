@@ -1,9 +1,7 @@
 #include "fonctions_vec.h"
 #define SQR(x) ((x)*(x)) 
 
-/*
-Fonction pour allouer
-*/
+
 
 void alloc_array_struct(int n)
 {
@@ -19,7 +17,6 @@ void alloc_array_struct(int n)
 
 
 
-//vecteur moyen
 void average_vec(int n)
 {
     aver=malloc(N_conf.tailleVecteur*sizeof(double));
@@ -34,7 +31,6 @@ void average_vec(int n)
         aver[i]/=n;
     }
 }
-//vecteur min
 void min_vec(double k)
 {
     min=malloc(N_conf.tailleVecteur*sizeof(double));
@@ -43,7 +39,6 @@ void min_vec(double k)
         min[i]=aver[i]-k;
 }
 
-//vecteur max
 void max_vec(double k)
 {
     max=malloc(N_conf.tailleVecteur*sizeof(double));
@@ -53,9 +48,7 @@ void max_vec(double k)
 }
 
 
-/*
-Fonction pour normaliser un vecteur
-*/
+
 void norm_vecteur_tab(int i,int size)
 {
     double sum=0.;
@@ -93,9 +86,7 @@ double* init_rand_w()
 
 
 
-/**
-On init un tableau avant de le mettre en shuffle
-**/
+
 void init_shuffle(int n)
 {
     index_array=malloc(sizeof(int)*n);
@@ -103,9 +94,7 @@ void init_shuffle(int n)
     for(i=0;i<n;i++)
         index_array[i]=i;
 }
-/**
-On le met de façon alétoire
-**/
+
 void array_shuffle(int n)
 {
     int i,r_and,k;
@@ -118,9 +107,7 @@ void array_shuffle(int n)
             index_array[r_and]=k;
         }
 }
-/**
-Fonction pour calculer la distance euclidienne
-*/
+
 double euc_distance(double *a1, double *a2, int n)
 {
 	double sum=0.0;
@@ -131,11 +118,6 @@ double euc_distance(double *a1, double *a2, int n)
 	}
 	return sqrt(sum);
 }
-
-/**
-Fonction pour calculer le α a chaque fois
-(pas sur que ca soit exactement ca a revoir )
-**/
 
 void calc_alpha(int it_n, int tot_it)
 {
